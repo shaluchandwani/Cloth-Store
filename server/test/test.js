@@ -87,6 +87,28 @@ describe("Cloths", () => {
                 done();
             });
     });
+
+    it(`Item to be deleted not found`, (done) => {
+        chai.request(app)
+            .delete(`/api/v1/cloths/345`)
+            .end((req, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                done();
+            });
+    });
+
+    it(`only positive numbers are allowed in the Cloth Id field`, (done) => {
+        chai.request(app)
+            .delete(`/api/v1/cloths/abc`)
+            .end((req, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                done();
+            });
+    });
+    
+
     })
 
 })
