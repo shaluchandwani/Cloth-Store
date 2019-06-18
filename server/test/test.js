@@ -14,7 +14,7 @@ describe("Cloths", () => {
     describe("POST/", () =>{
         it("should create an Item in the stock", (done) => {
             const item = {
-                "name":"pants",
+                "name":"tshit",
                 "price": 5000,
                 "description": "black pants"
             };
@@ -33,7 +33,7 @@ describe("Cloths", () => {
     describe("DELETE/", () =>{
     it(`Sucessfully deleted item`, (done) => {
         chai.request(app)
-            .delete(`/api/v1/cloths/1`)
+            .delete(`/api/v1/cloths/${itemId}`)
             .end((req, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
