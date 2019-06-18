@@ -1,7 +1,7 @@
 {
-  "name": "Cloth-Store",
+  "name": "cloth-store",
   "version": "1.0.0",
-  "description": "",
+  "description": "We have a APP called CLOTH STORE that has 5 API Endpoints",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,6 +20,8 @@
   "homepage": "https://github.com/shaluchandwani/Cloth-Store#readme",
   "devDependencies": {
     "babel-preset-env": "^1.7.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
     "nodemon": "^1.19.1"
   },
   "dependencies": {
