@@ -1,4 +1,6 @@
 import model from '../models';
+const Joi = require('@hapi/joi');
+import numvalidation from '../validation/numvalidation.js';
 
 const { Cloth } = model;
 
@@ -51,23 +53,34 @@ class Cloths {
     }
 
     static DeleteItem (req,res) {
-        return Cloth
-        .findByPk(parseInt(req.params.clothId))
-        .then(Cloth => {
-            if(!Cloth) {
-              return res.status(400).send({
-              message: 'Item Not Found',
-              });
-            }
+        const num = {
+            inputparamnumber: req.params.clothId
+        };
+        const result = Joi.validate(num, numvalidation);
+        if (result.error){
+            return res.status(400).send({
+                status: 400,
+                message: 'only positive numbers are allowed in the Cloth Id field'
+            });
+        } else {
             return Cloth
-              .destroy()
-              .then(() => res.status(200).send({
-                message: `Item successfully deleted`
-              }))
-              .catch(error => res.status(400).send(error));
-          })
-          .catch(error => res.status(400).send(error))
-      }
+            .findByPk(parseInt(req.params.clothId))
+            .then(Cloth => {
+                if(!Cloth) {
+                  return res.status(400).send({
+                  message: 'Item to be deleted not found',
+                  });
+                }
+                return Cloth
+                  .destroy()
+                  .then(() => res.status(200).send({
+                    message: `Item successfully deleted`
+                  }))
+                  .catch(error => res.status(400).send(error));
+              })
+              .catch(error => res.status(400).send(error))
+          }
+        }
 }
 
 export default Cloths;
