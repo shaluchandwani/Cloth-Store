@@ -3,7 +3,7 @@ import model from '../models';
 const { Cloth } = model;
 
 class Cloths {
-    static CreatItem(req,res) {
+    static CreatItem(req, res) {
         const { name, price, description } = req.body;
         let purchaseDate = new Date();
         return Cloth
@@ -19,6 +19,37 @@ class Cloths {
                 itemData
             }))
     }
+
+    static updateItem(req, res) {
+        const { name, description, price, purchaseDate, soldDate } = req.body;
+        return Cloth
+            .findByPk(req.params.id)
+            .then((item) => {
+                item.update({
+                    name: name || item.name,
+                    description: description || item.description,
+                    price: price || item.price,
+                    purchaseDate: purchaseDate || item.purchaseDate,
+                    soldDate: soldDate || item.soldDate,
+                })
+                    .then((updatedItem) => {
+                        res.status(200).json({
+                            status: 200,
+                            message: 'Item update succesfully',
+                            data: {
+                                name: name || item.name,
+                                description: description || item.description,
+                                price: price || item.price,
+                                purchaseDate: purchaseDate || item.purchaseDate,
+                                soldDate: soldDate || item.soldDate,
+                            }
+                        })
+                    })
+                    .catch(error => res.status(400).json(error));
+            }).catch(error => res.status(400).json(error));
+
+    }
+
     static DeleteItem (req,res) {
         return Cloth
         .findByPk(parseInt(req.params.clothId))
