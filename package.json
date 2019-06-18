@@ -1,5 +1,5 @@
 {
-  "name": "cloth-store",
+  "name": "Cloth-Store",
   "version": "1.0.0",
   "description": "We have a APP called CLOTH STORE that has 5 API Endpoints",
   "main": "index.js",
@@ -37,6 +37,7 @@
     "morgan": "^1.9.1",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^5.8.9"
+    "sequelize": "^5.8.9",
+    "sequelize-cli": "^5.5.0"
   }
 }
