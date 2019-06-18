@@ -45,6 +45,36 @@ describe("Cloths", () => {
                     done();
                 });
         });
+        it("should not update item", (done) => {
+            const item = {
+                "name": "Shirt",
+                "price": "10000hgf",
+                "description": "long sleeves shirt"
+            };
+            chai.request(app)
+                .patch(`/api/v1/cloths/1`)
+                .send(item)
+                .end((req, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+        it("should not update item whith wrong id", (done) => {
+            const item = {
+                "name": "Shirt",
+                "price": "10000hgf",
+                "description": "long sleeves shirt"
+            };
+            chai.request(app)
+                .patch(`/api/v1/cloths/nb`)
+                .send(item)
+                .end((req, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
     });
 
     describe("DELETE/", () =>{
