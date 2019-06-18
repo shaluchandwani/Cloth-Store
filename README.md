@@ -5,6 +5,7 @@ We have a APP called CLOTH STORE that has 5 API Endpoints
 | Methods | Endpoints | Actions |
 | :----- | :----- | ----- |
 | /POST | /api/v1/cloths | Creating a Item |
+| /PATCH | /api/v1/cloths/:id | updating an Item |
 | /DELETE | /api/v1/cloths/:clothId | Delete specified item |
 
 
