@@ -2,8 +2,13 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import app from "./../../app";
 
+/*global it*/
+/*global describe*/
+
+
 chai.use(chaiHttp);
 chai.should();
+let itemId;
 
 describe("Cloths", () => {
     describe("POST/", () => {
@@ -18,6 +23,7 @@ describe("Cloths", () => {
                 .send(item)
                 .end((req, res) => {
                     res.should.have.status(201);
+                    itemId = res.body.itemData.id;
                     res.body.should.be.a('object');
                     done();
                 });
@@ -40,5 +46,18 @@ describe("Cloths", () => {
                 });
         });
     });
+
+    describe("DELETE/", () =>{
+    it(`Sucessfully deleted item`, (done) => {
+        chai.request(app)
+            .delete(`/api/v1/cloths/${itemId}`)
+            .end((req, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                done();
+            });
+    });
+    })
+
 })
 
