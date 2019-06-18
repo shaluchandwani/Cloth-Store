@@ -6,10 +6,10 @@ chai.use(chaiHttp);
 chai.should();
 
 describe("Cloths", () => {
-    describe("POST/", () =>{
+    describe("POST/", () => {
         it("should create an Item in the stock", (done) => {
             const item = {
-                "name":"tshit",
+                "name": "tshit",
                 "price": 5000,
                 "description": "black pants"
             };
@@ -23,5 +23,22 @@ describe("Cloths", () => {
                 });
         })
     })
+    describe("PATCH/", () => {
+        it("should update an item in the stock", (done) => {
+            const item = {
+                "name": "Shirt",
+                "price": 10000,
+                "description": "long sleeves shirt"
+            };
+            chai.request(app)
+                .patch(`/api/v1/cloths/1`)
+                .send(item)
+                .end((req, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+    });
 })
 
