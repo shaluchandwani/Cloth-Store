@@ -1,11 +1,19 @@
 import model from '../models';
-const Joi = require('@hapi/joi');
+import Joi from '@hapi/joi';
 import numvalidation from '../validation/numvalidation.js';
+//import createValidation from '../middleware/validations';
 
 const { Cloth } = model;
 
 class Cloths {
     static CreatItem(req, res) {
+        const { error } = Joi.validate(req.body, numvalidation.createValidation);
+        if (error) {
+            return res.status(400).json({
+                message: error.details[0].message
+            })
+        }
+
         const { name, price, description } = req.body;
         let purchaseDate = new Date();
         return Cloth
@@ -56,7 +64,7 @@ class Cloths {
         const num = {
             inputparamnumber: req.params.clothId
         };
-        const result = Joi.validate(num, numvalidation);
+        const result = Joi.validate(num, numvalidation.numvalidation);
         if (result.error){
             return res.status(400).send({
                 status: 400,
@@ -78,7 +86,6 @@ class Cloths {
                   }))
                   .catch(error => res.status(400).send(error));
               })
-              .catch(error => res.status(400).send(error))
           }
         }
 }
