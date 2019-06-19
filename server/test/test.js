@@ -74,6 +74,34 @@ describe("Cloths", () => {
                 });
         })
     })
+    describe("GET/", () => {
+        it("it should get one account", (done) => {
+        chai.request(app) 
+        .get(`/api/v1/cloths/${itemId}`)
+        .end((req, res) => {
+            res.should.have.status(200);
+            done(); 
+        })
+    })
+    it(`Item to be deleted not found`, (done) => {
+        chai.request(app)
+            .delete(`/api/v1/cloths/35`)
+            .end((req, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                done();
+            });
+        })
+    it(`only positive numbers are allowed in the Cloth Id field`, (done) => {
+        chai.request(app)
+            .get(`/api/v1/cloths/asd`)
+            .end((req, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                done();
+            });
+    });
+    })
     describe("PATCH/", () => {
         it("should update an item in the stock", (done) => {
             const item = {
