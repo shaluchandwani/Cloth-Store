@@ -12,6 +12,7 @@ We have a APP called CLOTH STORE that has 5 API Endpoints
 | /POST | /api/v1/cloths | Creating a Item |
 | /PATCH | /api/v1/cloths/:id | updating an Item |
 | /DELETE | /api/v1/cloths/:clothId | Delete specified item |
+| /GET | /api/v1/cloths | GET all items |
 
 
 
