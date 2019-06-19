@@ -118,7 +118,7 @@ describe("Cloths", () => {
                     done();
                 });
         });
-        it("should not update item", (done) => {
+        it("should not update item with wrong price", (done) => {
             const item = {
                 "name": "Shirt",
                 "price": "10000hgf",
@@ -136,12 +136,21 @@ describe("Cloths", () => {
         it("should not update item whith wrong id", (done) => {
             const item = {
                 "name": "Shirt",
-                "price": "10000hgf",
+                "price": 10000,
                 "description": "long sleeves shirt"
             };
             chai.request(app)
-                .patch(`/api/v1/cloths/nb`)
+                .patch(`/api/v1/cloths/45567`)
                 .send(item)
+                .end((req, res) => {
+                    res.should.have.status(404);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+        it(`only positive numbers are allowed in the item Id field`, (done) => {
+            chai.request(app)
+                .patch(`/api/v1/cloths/abc`)
                 .end((req, res) => {
                     res.should.have.status(400);
                     res.body.should.be.a('object');
@@ -150,37 +159,37 @@ describe("Cloths", () => {
         });
     });
 
-    describe("DELETE/", () =>{
-    it(`Sucessfully deleted item`, (done) => {
-        chai.request(app)
-            .delete(`/api/v1/cloths/${itemId}`)
-            .end((req, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                done();
-            });
-    });
+    describe("DELETE/", () => {
+        it(`Sucessfully deleted item`, (done) => {
+            chai.request(app)
+                .delete(`/api/v1/cloths/${itemId}`)
+                .end((req, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
 
-    it(`Item to be deleted not found`, (done) => {
-        chai.request(app)
-            .delete(`/api/v1/cloths/345`)
-            .end((req, res) => {
-                res.should.have.status(400);
-                res.body.should.be.a('object');
-                done();
-            });
-    });
+        it(`Item to be deleted not found`, (done) => {
+            chai.request(app)
+                .delete(`/api/v1/cloths/345`)
+                .end((req, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
 
-    it(`only positive numbers are allowed in the Cloth Id field`, (done) => {
-        chai.request(app)
-            .delete(`/api/v1/cloths/abc`)
-            .end((req, res) => {
-                res.should.have.status(400);
-                res.body.should.be.a('object');
-                done();
-            });
-    });
-    
+        it(`only positive numbers are allowed in the Cloth Id field`, (done) => {
+            chai.request(app)
+                .delete(`/api/v1/cloths/abc`)
+                .end((req, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+
 
     })
 

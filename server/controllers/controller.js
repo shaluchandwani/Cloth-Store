@@ -29,35 +29,43 @@ class Cloths {
                 itemData
             }))
     }
-
     static updateItem(req, res) {
-        const { name, description, price, purchaseDate, soldDate } = req.body;
+        const up = { 
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description,
+            id: req.params.id,
+        };
+        const { error } = Joi.validate(up, numvalidation.updatevalidations);
+        if (error) {
+            return res.status(400).json({
+                message: error.details[0].message
+            });
+        }
         return Cloth
             .findByPk(req.params.id)
-            .then((item) => {
+             .then((item) => {
+                if(!item) {
+                    return res.status(404).send({
+                    message: 'Item to update not found',
+                    });
+                  }
                 item.update({
-                    name: name || item.name,
-                    description: description || item.description,
-                    price: price || item.price,
-                    purchaseDate: purchaseDate || item.purchaseDate,
-                    soldDate: soldDate || item.soldDate,
+                    name: up.name || item.name,
+                    description: up.description || item.description,
+                    price: up.price || item.price,
                 })
-                    .then((updatedItem) => {
+                    .then(() => {                    
                         res.status(200).json({
-                            status: 200,
-                            message: 'Item update succesfully',
+                            message: 'Item updated succesfully',
                             data: {
-                                name: name || item.name,
-                                description: description || item.description,
-                                price: price || item.price,
-                                purchaseDate: purchaseDate || item.purchaseDate,
-                                soldDate: soldDate || item.soldDate,
+                                name:  item.name,
+                                description: item.description,
+                                price: item.price,                          
                             }
                         })
                     })
-                    .catch(error => res.status(400).json(error));
-            }).catch(error => res.status(400).json(error));
-
+            })
     }
 
     static DeleteItem (req,res) {
