@@ -1,3 +1,8 @@
+[![npm version](https://badge.fury.io/js/heroku-api-plugin.svg)](http://badge.fury.io/js/heroku-api-plugin)
+[![Build Status](https://travis-ci.com/shaluchandwani/Cloth-Store.svg?branch=develop)](https://travis-ci.com/shaluchandwani/Cloth-Store) 
+
+
+
 # Cloth-Store
 
 We have a APP called CLOTH STORE that has 5 API Endpoints
