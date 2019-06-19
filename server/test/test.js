@@ -110,7 +110,7 @@ describe("Cloths", () => {
                 "description": "long sleeves shirt"
             };
             chai.request(app)
-                .patch(`/api/v1/cloths/1`)
+                .patch(`/api/v1/cloths/${itemId}`)
                 .send(item)
                 .end((req, res) => {
                     res.should.have.status(200);
@@ -125,7 +125,7 @@ describe("Cloths", () => {
                 "description": "long sleeves shirt"
             };
             chai.request(app)
-                .patch(`/api/v1/cloths/1`)
+                .patch(`/api/v1/cloths/${itemId}`)
                 .send(item)
                 .end((req, res) => {
                     res.should.have.status(400);
