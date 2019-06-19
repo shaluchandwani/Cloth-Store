@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test nyc --reporter=text mocha --require babel-register server/test/*.js --exit",
     "start": "nodemon --exec babel-node app.js",
-    "seq" : "sequelize db:migrate"
+    "seq": "sequelize db:migrate"
   },
   "repository": {
     "type": "git",

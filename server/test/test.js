@@ -27,6 +27,22 @@ describe("Cloths", () => {
                     res.body.should.be.a('object');
                     done();
                 });
+
+        })
+        it("It should not create an item because of empty name", (done) => {
+            const item = {
+                "name": "",
+                "price": 5000,
+                "description": "black pants"
+            };
+            chai.request(app)
+                .post(`/api/v1/cloths`)
+                .send(item)
+                .end((req, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    done();
+                });
         })
     })
     describe("PATCH/", () => {
