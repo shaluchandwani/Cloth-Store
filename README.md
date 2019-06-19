@@ -13,7 +13,7 @@ We have a APP called CLOTH STORE that has 5 API Endpoints
 | /PATCH | /api/v1/cloths/:id | updating an Item |
 | /DELETE | /api/v1/cloths/:clothId | Delete specified item |
 | /GET | /api/v1/cloths | GET all items on cloth table |
-
+| /GET | /api/v1/cloths/:clothId |GET one item |
 
 
 
