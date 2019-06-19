@@ -4,9 +4,14 @@
   "description": "We have a APP called CLOTH STORE that has 5 API Endpoints",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test nyc --reporter=text mocha --require babel-register server/test/*.js --exit",
     "start": "nodemon --exec babel-node app.js",
-    "seq": "sequelize db:migrate"
+    "seq": "sequelize db:migrate",
+    "test": "NODE_ENV=test nyc --reporter=text mocha --require babel-register server/test/*.js --exit",
+    "build": "rm -rf ./build && babel -d ./build ./server/test -s",
+    "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
+    "coveralls-coverage": "coveralls < lcov.info",
+    "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
+    "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage"
   },
   "repository": {
     "type": "git",
