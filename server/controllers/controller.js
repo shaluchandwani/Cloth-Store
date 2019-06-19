@@ -88,6 +88,32 @@ class Cloths {
               })
           }
         }
+        static getOne (req,res) {
+            const num = {
+                inputparamnumber: req.params.clothId
+            };
+            const result = Joi.validate(num, numvalidation.numvalidation);
+            if (result.error){
+                return res.status(400).send({
+                    status: 400,
+                    message: 'only positive numbers are allowed in the Cloth Id field'
+                });
+            } else {
+             return Cloth
+                .findByPk(parseInt(req.params.clothId))
+                .then(Cloth =>{
+                    if(!Cloth){
+                        return res.status(400).send({
+                            message: 'Item Not Found', 
+                        });
+                    }else{
+                        return res.status(200).json({
+                            Cloth
+                        })
+                    }
+                })
+            }
+        }
 
     static GetAllItems (req, res) {
         return Cloth
