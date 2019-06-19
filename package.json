@@ -4,9 +4,10 @@
   "description": "We have a APP called CLOTH STORE that has 5 API Endpoints",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test nyc --reporter=text mocha --require babel-register server/test/*.js --exit",
     "start": "nodemon --exec babel-node app.js",
-    "seq": "sequelize db:migrate"
+    "sequelize": "sequelize db:migrate",
+    "sequelize1": "sequelize db:seed:all",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 3000 server/test/*.js --exit"
   },
   "repository": {
     "type": "git",
@@ -20,20 +21,23 @@
   },
   "homepage": "https://github.com/shaluchandwani/Cloth-Store#readme",
   "devDependencies": {
-    "babel-preset-env": "^1.7.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.13.0",
-    "nodemon": "^1.19.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
     "mocha": "^6.1.4",
+    "nodemon": "^1.19.1",
     "nyc": "^14.1.1"
   },
   "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
     "@hapi/joi": "^15.0.3",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
     "body-parser": "^1.19.0",
+    "destroy": "^1.0.4",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "joi": "^14.3.1",
