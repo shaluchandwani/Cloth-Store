@@ -11,6 +11,21 @@ chai.should();
 let itemId;
 
 describe("Cloths", () => {
+
+    describe("GET/", () => {
+        it("No item", (done) => {
+            chai.request(app)
+                .get(`/api/v1/cloths`)
+                .end((req, res) => {
+                    res.should.have.status(404);
+                    res.body.should.have.property('message');
+                    res.body.should.have.property('status');
+                    res.body.should.be.an('object')
+                    done();
+                })
+        })
+    })
+
     describe("POST/", () => {
         it("should create an Item in the stock", (done) => {
             const item = {
@@ -29,6 +44,20 @@ describe("Cloths", () => {
                 });
 
         })
+
+        describe("GET/", () => {
+            it("Should get all items", (done) => {
+                chai.request(app)
+                    .get(`/api/v1/cloths`)
+                    .end((req, res) => {
+                        res.should.have.status(200);
+                        res.body.should.have.property('status');
+                        res.body.should.be.an('object')
+                        done();
+                    })
+            })
+        })
+
         it("It should not create an item because of empty name", (done) => {
             const item = {
                 "name": "",

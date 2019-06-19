@@ -88,6 +88,25 @@ class Cloths {
               })
           }
         }
+
+    static GetAllItems (req, res) {
+        return Cloth
+        .findAll()
+        .then(cloths => {
+            if (!cloths[0]) {
+                return res.status(404)
+                .json({
+                    status: 404,
+                    message: "No item in the store"
+                })
+            }
+            res.status(200)
+            .json({
+                status: 200,
+                data: cloths
+            })
+        })
+    }
 }
 
 export default Cloths;
