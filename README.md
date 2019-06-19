@@ -1,6 +1,6 @@
 [![npm version](https://badge.fury.io/js/heroku-api-plugin.svg)](http://badge.fury.io/js/heroku-api-plugin)
 [![Build Status](https://travis-ci.com/shaluchandwani/Cloth-Store.svg?branch=develop)](https://travis-ci.com/shaluchandwani/Cloth-Store) 
-
+[![Coverage Status](https://coveralls.io/repos/github/shaluchandwani/Cloth-Store/badge.svg?branch=develop)](https://coveralls.io/github/shaluchandwani/Cloth-Store?branch=develop)
 
 
 # Cloth-Store
