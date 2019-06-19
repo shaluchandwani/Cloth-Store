@@ -24,7 +24,6 @@ class Cloths {
                 description
             })
             .then(itemData => res.status(201).json({
-                status: 201,
                 message: 'Item successfully created',
                 itemData
             }))

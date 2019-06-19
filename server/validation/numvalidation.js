@@ -7,7 +7,7 @@ const numvalidation = Joi.object().keys({
 
 const createValidation = Joi.object().keys({
     name: Joi.string().required(),
-    price: Joi.number().integer().required(),
+    price: Joi.number().integer().positive().required(),
     description: Joi.string().required(),
 });
 export default {numvalidation, createValidation};

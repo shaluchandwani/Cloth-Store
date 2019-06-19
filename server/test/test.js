@@ -40,6 +40,39 @@ describe("Cloths", () => {
                     res.should.have.status(201);
                     itemId = res.body.itemData.id;
                     res.body.should.be.a('object');
+                    res.body.should.have.property('message').to.equal('Item successfully created');
+                    done();
+                });
+
+        })
+        it("It should not create an item because of empty name", (done) => {
+            const item = {
+                "name": "",
+                "price": 5000,
+                "description": "black pants"
+            };
+            chai.request(app)
+                .post(`/api/v1/cloths`)
+                .send(item)
+                .end((req, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message')
+                    done();
+                });
+        })
+        it("The price should not be negative", (done) => {
+            const item = {
+                "name": "fofo",
+                "price": -5000,
+                "description": "black pants"
+            };
+            chai.request(app)
+                .post(`/api/v1/cloths`)
+                .send(item)
+                .end((req, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
                     done();
                 });
 
