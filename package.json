@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon --exec babel-node app.js",
     "sequelize": "sequelize db:migrate",
-    "sequelize1": "sequelize db:seed:all",
+    "build": "npm run clear && babel server --out-dir build",
+    "clear": "rm -rf build",
+    "coveralls": "npm test  && nyc report --reporter=text-lcov | coveralls",
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 3000 server/test/*.js --exit"
   },
   "repository": {
@@ -25,6 +27,7 @@
     "chai-http": "^4.3.0",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.13.0",
+    "istanbul": "^0.4.5",
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1"
@@ -37,6 +40,7 @@
     "@babel/register": "^7.4.4",
     "@hapi/joi": "^15.0.3",
     "body-parser": "^1.19.0",
+    "coveralls": "^3.0.4",
     "destroy": "^1.0.4",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
