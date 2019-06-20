@@ -10,4 +10,10 @@ const createValidation = Joi.object().keys({
     price: Joi.number().integer().required(),
     description: Joi.string().required(),
 });
-export default {numvalidation, createValidation};
+const updatevalidations = Joi.object().keys({
+    name:Joi.string().strict().trim(),
+    price:Joi.number().integer().positive(),
+    description:Joi.string().strict().trim(),
+    id: Joi.number().positive().required()
+});
+export default {numvalidation, createValidation,updatevalidations};
