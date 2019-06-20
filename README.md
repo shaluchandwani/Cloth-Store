@@ -1,6 +1,8 @@
 [![npm version](https://badge.fury.io/js/heroku-api-plugin.svg)](http://badge.fury.io/js/heroku-api-plugin)
 [![Build Status](https://travis-ci.com/shaluchandwani/Cloth-Store.svg?branch=develop)](https://travis-ci.com/shaluchandwani/Cloth-Store) 
-[![Coverage Status](https://coveralls.io/repos/github/shaluchandwani/Cloth-Store/badge.svg?branch=sh-config-travis)](https://coveralls.io/github/shaluchandwani/Cloth-Store?branch=sh-config-travis)
+[![Coverage Status](https://coveralls.io/repos/github/shaluchandwani/Cloth-Store/badge.svg?branch=develop)](https://coveralls.io/github/shaluchandwani/Cloth-Store?branch=develop)
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
+[![Reviewed by Hound](https://img.shields.io/github/issues/shaluchandwani/Cloth-Store.svg)](https://houndci.com)
 
 
 # Cloth-Store
