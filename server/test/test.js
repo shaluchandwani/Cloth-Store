@@ -13,14 +13,13 @@ let itemId;
 describe("Cloths", () => {
 
     describe("GET/", () => {
-        it("No item", (done) => {
+        it("No item becouse the is on data in the database", (done) => {
             chai.request(app)
                 .get(`/api/v1/cloths`)
                 .end((req, res) => {
                     res.should.have.status(404);
-                    res.body.should.have.property('message');
-                    res.body.should.have.property('status');
-                    res.body.should.be.an('object')
+                    res.body.should.be.an('object');
+                    res.body.should.have.property("message").eql("No item in the store");
                     done();
                 })
         })
@@ -39,7 +38,16 @@ describe("Cloths", () => {
                 .end((req, res) => {
                     res.should.have.status(201);
                     itemId = res.body.itemData.id;
-                    res.body.should.be.a('object');
+                    res.should.be.json;
+                    res.body.should.have.property("itemData");
+                    res.body.itemData.should.have.property("id").eql(itemId);
+                    res.body.itemData.should.have.property('name').eql('tshit');
+                    res.body.itemData.should.have.property('purchaseDate');
+                    res.body.itemData.should.have.property('description').eql('black pants');
+                    res.body.itemData.should.have.property('updatedAt');
+                    res.body.itemData.should.have.property('createdAt');
+                    res.body.itemData.should.have.property('soldDate');
+                    res.body.should.have.property("message").eql("Item successfully created")
                     done();
                 });
 
@@ -51,8 +59,9 @@ describe("Cloths", () => {
                     .get(`/api/v1/cloths`)
                     .end((req, res) => {
                         res.should.have.status(200);
-                        res.body.should.have.property('status');
-                        res.body.should.be.an('object')
+                        res.should.be.json;
+                        res.body.should.have.property("data");
+                        res.body.data[0].should.have.property("id").eql(itemId);
                         done();
                     })
             })
@@ -69,35 +78,41 @@ describe("Cloths", () => {
                 .send(item)
                 .end((req, res) => {
                     res.should.have.status(400);
-                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('"name" is not allowed to be empty');
+                    res.should.be.json;
                     done();
                 });
         })
     })
     describe("GET/", () => {
-        it("it should get one account", (done) => {
+        it("it should get one with the id", (done) => {
         chai.request(app) 
         .get(`/api/v1/cloths/${itemId}`)
         .end((req, res) => {
+            res.should.be.json;
             res.should.have.status(200);
+            res.body.should.have.property("Cloth").should.be.an('object');
+            res.body.Cloth.should.have.property('id').eql(itemId);
             done(); 
         })
     })
-    it(`Item to be deleted not found`, (done) => {
+    it(`Item with with wrong id not found `, (done) => {
         chai.request(app)
-            .delete(`/api/v1/cloths/35`)
+            .get(`/api/v1/cloths/35`)
             .end((req, res) => {
+                res.should.be.json;
                 res.should.have.status(400);
-                res.body.should.be.a('object');
+                res.body.should.have.property("message").eql("Item Not Found");
                 done();
             });
-        })
+        });
     it(`only positive numbers are allowed in the Cloth Id field`, (done) => {
         chai.request(app)
             .get(`/api/v1/cloths/asd`)
             .end((req, res) => {
                 res.should.have.status(400);
-                res.body.should.be.a('object');
+                res.should.be.json;
+                res.body.should.have.property('message').eql("only positive numbers are allowed in the Cloth Id field");
                 done();
             });
     });
@@ -113,8 +128,30 @@ describe("Cloths", () => {
                 .patch(`/api/v1/cloths/${itemId}`)
                 .send(item)
                 .end((req, res) => {
+                    res.should.be.json;
                     res.should.have.status(200);
-                    res.body.should.be.a('object');
+                    res.body.should.have.property("message").eql('Item updated succesfully');
+                    res.body.should.have.property('data').should.be.an('object');
+                    res.body.data.should.have.property('name');
+                    res.body.data.should.have.property('description');
+                    res.body.data.should.have.property('price');
+                    done();
+                });
+        });
+        it("should update an item in the stock when there is no data", (done) => {
+            const item = {
+            };
+            chai.request(app)
+                .patch(`/api/v1/cloths/${itemId}`)
+                .send(item)
+                .end((req, res) => {
+                    res.should.be.json;
+                    res.should.have.status(200);
+                    res.body.should.have.property("message").eql('Item updated succesfully');
+                    res.body.should.have.property('data').should.be.an('object');
+                    res.body.data.should.have.property('name');
+                    res.body.data.should.have.property('description');
+                    res.body.data.should.have.property('price');
                     done();
                 });
         });
@@ -129,7 +166,8 @@ describe("Cloths", () => {
                 .send(item)
                 .end((req, res) => {
                     res.should.have.status(400);
-                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('"price" must be a number');
+                    res.should.be.json;
                     done();
                 });
         });
@@ -144,7 +182,9 @@ describe("Cloths", () => {
                 .send(item)
                 .end((req, res) => {
                     res.should.have.status(404);
+                    res.should.be.json;
                     res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('Item to update not found');
                     done();
                 });
         });
@@ -154,6 +194,8 @@ describe("Cloths", () => {
                 .end((req, res) => {
                     res.should.have.status(400);
                     res.body.should.be.a('object');
+                    res.should.be.json;
+                    res.body.message.should.be.eql('"id" must be a number');
                     done();
                 });
         });
@@ -166,6 +208,8 @@ describe("Cloths", () => {
                 .end((req, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
+                    res.should.be.json;
+                    res.body.message.should.be.eql('Item successfully deleted');
                     done();
                 });
         });
@@ -176,6 +220,8 @@ describe("Cloths", () => {
                 .end((req, res) => {
                     res.should.have.status(400);
                     res.body.should.be.a('object');
+                    res.should.be.json;
+                    res.body.message.should.be.eql('Item to be deleted not found');
                     done();
                 });
         });
@@ -185,13 +231,12 @@ describe("Cloths", () => {
                 .delete(`/api/v1/cloths/abc`)
                 .end((req, res) => {
                     res.should.have.status(400);
+                    res.should.be.json;
                     res.body.should.be.a('object');
+                    res.body.message.should.be.eql('only positive numbers are allowed in the Cloth Id field');
                     done();
                 });
         });
-
-
     })
-
 })
 
