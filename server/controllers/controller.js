@@ -1,7 +1,6 @@
 import model from '../models';
 import Joi from '@hapi/joi';
 import numvalidation from '../validation/numvalidation.js';
-//import createValidation from '../middleware/validations';
 
 const { Cloth } = model;
 
@@ -13,7 +12,6 @@ class Cloths {
                 message: error.details[0].message
             })
         }
-
         const { name, price, description } = req.body;
         let purchaseDate = new Date();
         return Cloth
@@ -24,7 +22,6 @@ class Cloths {
                 description
             })
             .then(itemData => res.status(201).json({
-                status: 201,
                 message: 'Item successfully created',
                 itemData
             }))
@@ -46,7 +43,7 @@ class Cloths {
             .findByPk(req.params.id)
              .then((item) => {
                 if(!item) {
-                    return res.status(404).send({
+                    return res.status(404).json({
                     message: 'Item to update not found',
                     });
                   }
@@ -74,8 +71,7 @@ class Cloths {
         };
         const result = Joi.validate(num, numvalidation.numvalidation);
         if (result.error){
-            return res.status(400).send({
-                status: 400,
+            return res.status(400).json({
                 message: 'only positive numbers are allowed in the Cloth Id field'
             });
         } else {
@@ -83,16 +79,15 @@ class Cloths {
             .findByPk(parseInt(req.params.clothId))
             .then(Cloth => {
                 if(!Cloth) {
-                  return res.status(400).send({
+                  return res.status(400).json({
                   message: 'Item to be deleted not found',
                   });
                 }
                 return Cloth
                   .destroy()
-                  .then(() => res.status(200).send({
+                  .then(() => res.status(200).json({
                     message: `Item successfully deleted`
                   }))
-                  .catch(error => res.status(400).send(error));
               })
           }
         }
@@ -102,8 +97,7 @@ class Cloths {
             };
             const result = Joi.validate(num, numvalidation.numvalidation);
             if (result.error){
-                return res.status(400).send({
-                    status: 400,
+                return res.status(400).json({
                     message: 'only positive numbers are allowed in the Cloth Id field'
                 });
             } else {
@@ -111,7 +105,7 @@ class Cloths {
                 .findByPk(parseInt(req.params.clothId))
                 .then(Cloth =>{
                     if(!Cloth){
-                        return res.status(400).send({
+                        return res.status(400).json({
                             message: 'Item Not Found', 
                         });
                     }else{
@@ -130,13 +124,11 @@ class Cloths {
             if (!cloths[0]) {
                 return res.status(404)
                 .json({
-                    status: 404,
                     message: "No item in the store"
                 })
             }
             res.status(200)
             .json({
-                status: 200,
                 data: cloths
             })
         })
